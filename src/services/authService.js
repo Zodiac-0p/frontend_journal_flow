@@ -142,6 +142,7 @@ const authService = {
 
     sessionStorage.setItem("accessToken", access);
     sessionStorage.setItem("token", access);
+    localStorage.setItem("accessToken", access);
 
     const currentUser = {
       id: user.id,
@@ -212,6 +213,7 @@ const authService = {
 
     sessionStorage.setItem("accessToken", access);
     sessionStorage.setItem("token", access);
+    localStorage.setItem("accessToken", access);
 
     const currentUser = {
       id: user.id,

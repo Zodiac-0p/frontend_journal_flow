@@ -24,7 +24,9 @@ const api = axios.create({
 // ==========================================
 api.interceptors.request.use(
   (config) => {
-    const token = sessionStorage.getItem("accessToken");
+    const token =
+      sessionStorage.getItem("accessToken") ||
+      localStorage.getItem("accessToken");
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -84,16 +86,9 @@ api.interceptors.response.use(
           response.data.access;
 
         // Save the new token
-        sessionStorage.setItem(
-          "accessToken",
-          newAccessToken
-        );
-
-        // Backward compatibility
-        sessionStorage.setItem(
-          "token",
-          newAccessToken
-        );
+        sessionStorage.setItem("accessToken", newAccessToken);
+        sessionStorage.setItem("token", newAccessToken);
+        localStorage.setItem("accessToken", newAccessToken);
 
         // Update Authorization header
         originalRequest.headers.Authorization =
