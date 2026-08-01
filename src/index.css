@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   DESIGN SYSTEM — ELSEVIER-INSPIRED
+   ============================================= */
+:root {
+  --primary:       #FF6B00;   /* Elsevier orange accent */
+  --primary-dark:  #E05A00;
+  --navy:          #1B2A3B;   /* deep navy headings */
+  --navy-mid:      #2C4158;
+  --blue:          #005E9E;   /* link / button blue */
+  --blue-hover:    #004C82;
+  --surface:       #FFFFFF;
+  --bg-light:      #F7F9FB;
+  --bg-alt:        #EFF4F9;
+  --border:        #D4DCE6;
+  --border-light:  #E8EFF6;
+  --text-primary:  #1B2A3B;
+  --text-secondary:#4A5E72;
+  --text-muted:    #7A8FA3;
+  --font-serif:    'Noto Serif', Georgia, serif;
+  --font-sans:     'Source Sans 3', system-ui, sans-serif;
+  --radius-sm:     4px;
+  --radius-md:     8px;
+  --radius-lg:     12px;
+  --shadow-card:   0 1px 3px rgba(27,42,59,0.08), 0 4px 12px rgba(27,42,59,0.06);
+  --shadow-hover:  0 2px 8px rgba(27,42,59,0.12), 0 8px 24px rgba(27,42,59,0.09);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--bg-light);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Typography helpers ---- */
+.font-serif { font-family: var(--font-serif) !important; }
+.font-sans  { font-family: var(--font-sans)  !important; }
+
+h1,h2,h3 { font-family: var(--font-serif); }
+h4,h5,h6,p,span,button,input,select,label { font-family: var(--font-sans); }
+
+/* ---- Professional status badges ---- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+.badge-blue    { background:#E5F0FB; color:#005E9E; border-color:#B6D2EF; }
+.badge-green   { background:#E6F4EC; color:#1A7A38; border-color:#A5D9B8; }
+.badge-orange  { background:#FFF0E6; color:#C14B00; border-color:#FFCCA8; }
+.badge-red     { background:#FDEEEE; color:#B52626; border-color:#F4B8B8; }
+.badge-gray    { background:#F0F4F8; color:#4A5E72; border-color:#C8D5E0; }
+.badge-purple  { background:#F0EBF9; color:#5E2DA0; border-color:#CAB6E8; }
+
+/* ---- Professional card surface ---- */
+.card-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow .2s, border-color .2s;
+}
+.card-surface:hover { box-shadow: var(--shadow-hover); border-color:#B6C8D9; }
+
+/* ---- Link style ---- */
+.link-blue {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.link-blue:hover { color: var(--blue-hover); }
+
+/* ---- Section divider ---- */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 24px 0;
+}
+
+/* ---- Smooth focus ring ---- */
+*:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Scrollbar styling ---- */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-alt); }
+::-webkit-scrollbar-thumb { background: #B6C8D9; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #8FA9C0; }
