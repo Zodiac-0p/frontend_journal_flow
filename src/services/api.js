@@ -1,24 +1,13 @@
 // src/services/api.js
 import axios from "axios";
 
-/* ====================================================
-   (Commented out temporarily)
-==================================================== */
+// Automatically use the host IP/domain the frontend is accessed from, defaulting to 127.0.0.1
 export const BACKEND_ORIGIN =
   import.meta.env.VITE_BACKEND_URL ||
   `http://${window.location.hostname || "127.0.0.1"}:8000`;
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || `${BACKEND_ORIGIN}/api`;
-
-
-/* ====================================================
-   NEW TEMPORARY CODE FOR NETWORK TESTING
-==================================================== */
-// Put your actual computer's Wi-Fi IP address here
-// export const BACKEND_ORIGIN = 'http://192.168.0.182:8000'; 
-// const API_BASE_URL = `${BACKEND_ORIGIN}/api`;
-
 
 // Create axios instance
 const api = axios.create({
@@ -35,9 +24,7 @@ const api = axios.create({
 // ==========================================
 api.interceptors.request.use(
   (config) => {
-    const token =
-      sessionStorage.getItem("accessToken") ||
-      localStorage.getItem("accessToken");
+    const token = sessionStorage.getItem("accessToken");
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -57,7 +44,6 @@ export const logout = async () => {
   } catch (e) {
     console.error("Backend logout error:", e);
   }
-  
   sessionStorage.removeItem("accessToken");
   sessionStorage.removeItem("token");
   localStorage.removeItem("accessToken");
@@ -94,15 +80,24 @@ api.interceptors.response.use(
           { withCredentials: true }
         );
 
-        const newAccessToken = response.data.access;
+        const newAccessToken =
+          response.data.access;
 
         // Save the new token
-        sessionStorage.setItem("accessToken", newAccessToken);
-        sessionStorage.setItem("token", newAccessToken);
-        localStorage.setItem("accessToken", newAccessToken);
+        sessionStorage.setItem(
+          "accessToken",
+          newAccessToken
+        );
+
+        // Backward compatibility
+        sessionStorage.setItem(
+          "token",
+          newAccessToken
+        );
 
         // Update Authorization header
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        originalRequest.headers.Authorization =
+          `Bearer ${newAccessToken}`;
 
         // Retry the original request
         return api(originalRequest);
@@ -118,5 +113,4 @@ api.interceptors.response.use(
   }
 );
 
-// Export a single time at the very end
 export default api;

@@ -62,6 +62,7 @@ export default function LoginPage() {
   const [verificationToken, setVerificationToken] = useState(null);
   const [otpSecondsRemaining, setOtpSecondsRemaining] = useState(0);
   const [otpTimerActive, setOtpTimerActive] = useState(false);
+  const [fromUnverified, setFromUnverified] = useState(false);
 
   useEffect(() => {
     const loadClassifications = async () => {
@@ -276,6 +277,28 @@ export default function LoginPage() {
         return;
       }
 
+      // If the account exists but email is not verified, go to OTP step
+      const action = resData.action || "";
+      if (action === "verify_email") {
+        // Resend a fresh OTP so the user can verify
+        try {
+          const resendResponse = await authService.resendVerificationEmail({ email: normalizedEmail });
+          setVerificationToken(resendResponse?.verification_token || null);
+        } catch (_) {
+          // Resend failed silently — user can still try with old OTP or hit Resend
+        }
+        setOtp("");
+        setPassword("");
+        setShowPassword(false);
+        setFromUnverified(true);
+        startOtpTimer();
+        toast("Your email is not verified yet. A new code has been sent to your inbox.", {
+          icon: "📧",
+        });
+        setStep("otp");
+        return;
+      }
+
       setPassword("");
       setShowPassword(false);
       setStep("login");
@@ -446,6 +469,7 @@ export default function LoginPage() {
       return;
     }
 
+    // Password is required in both flows (registration and unverified-login)
     if (!password.trim()) {
       setError("Please enter your password so we can sign you in after verification.");
       return;
@@ -530,6 +554,7 @@ export default function LoginPage() {
     setVerificationToken(null);
     setOtpSecondsRemaining(0);
     setOtpTimerActive(false);
+    setFromUnverified(false);
     setStep("email");
   };
 
@@ -778,6 +803,17 @@ export default function LoginPage() {
                   onChange={(e) => setOtp(e.target.value)}
                   className="mt-4"
                 />
+
+                {/* Show password field when coming from unverified login flow */}
+                {fromUnverified && (
+                  <PasswordInput
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password to sign in after verification"
+                    show={showPassword}
+                    setShow={setShowPassword}
+                  />
+                )}
 
                 <div className="mt-3 flex items-center justify-between text-sm text-gray-600">
                   <span>Code valid for {formatOtpCountdown(otpSecondsRemaining)}</span>
