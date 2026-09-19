@@ -134,6 +134,15 @@ export default function ManagerLogin() {
                 {loading ? "Verifying Credentials..." : "Authenticate & Continue"}
               </button>
             </form>
+             <div className="flex justify-end mt-1 px-1">
+                  <button
+                    type="button"
+                    onClick={() => navigate("/forgot-password", { state: { email } })}
+                    className="text-[13px] text-[#1a3a5c] hover:underline"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
           </div>
         </main>
       </motion.div>

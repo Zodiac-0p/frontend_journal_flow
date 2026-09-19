@@ -55,7 +55,7 @@ export default function SubmitArticlePage() {
   const tasks = useMemo(() => [
     { title: "Article Type", icon: FileBadge }, { title: "Upload Files", icon: Files },
     { title: "Article Details", icon: FileText }, { title: "Authors", icon: UserRound },
-    { title: "Access Type", icon: Globe }, { title: "Categories", icon: Tags },
+    { title: "Open Access", icon: Globe }, { title: "Categories", icon: Tags },
     { title: "Additional Information", icon: MessageSquareText }, { title: "Review & Submit", icon: ClipboardCheck },
   ], []);
 
@@ -485,8 +485,7 @@ export default function SubmitArticlePage() {
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             {isSaving && <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.75)", background: "rgba(255,255,255,0.1)", padding: "4px 12px", borderRadius: "3px", border: "1px solid rgba(255,255,255,0.2)", fontFamily: "var(--font-sans)" }}>Auto-saving…</span>}
-            <button onClick={handlePurgeDraft} disabled={isSubmitting} style={{ background: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.9)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "4px", padding: "8px 18px", fontSize: "13px", fontWeight: "600", fontFamily: "var(--font-sans)", cursor: "pointer" }}>Clear Draft</button>
-            
+            <button onClick={handlePurgeDraft} disabled={isSubmitting} style={{ background: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.9)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "4px", padding: "8px 18px", fontSize: "13px", fontWeight: "600", fontFamily: "var(--font-sans)", cursor: "pointer" }}>Reset Form Fields</button>
           </div>
         </div>
 
@@ -554,8 +553,8 @@ export default function SubmitArticlePage() {
                                       <Check size={11} strokeWidth={3} /> File added
                                     </span>
                                   ) : (
-                                    <label className="flex items-center gap-1.5 text-xs font-semibold bg-orange-50 border">
-                                      {/* <Upload size={11} /> Upload file */}
+                                    <label className="flex items-center gap-1.5 text-xs font-semibold text-orange-600 bg-orange-50 border border-orange-200 px-2.5 py-1 rounded-full cursor-pointer hover:bg-orange-100 transition">
+                                      <Upload size={11} /> Upload file
                                       <input
                                         type="file"
                                         className="hidden"
@@ -720,7 +719,7 @@ export default function SubmitArticlePage() {
                 {step === 5 && (
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-xl font-bold text-slate-800">Access Type</h3>
+                      <h3 className="text-xl font-bold text-slate-800">Open Access</h3>
                       <p className="text-gray-400 text-xs mt-1">Choose publication access type <span className="text-red-500">*</span></p>
                     </div>
                     <div className="space-y-4">

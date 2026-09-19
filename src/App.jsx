@@ -257,7 +257,6 @@ function AnimatedRoutes() {
         ========================================== */}
         {/* Login page: no PublicOnlyRoute wrapper — keep it invisible */}
         <Route path="/x9-admin" element={<SuperAdminLogin />} />
-        <Route path="/x9-admin/*" element={<SuperAdminLogin />} />
         <Route
           path="/x9-admin/dashboard/*"
           element={
